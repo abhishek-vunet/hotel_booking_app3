@@ -1,41 +1,39 @@
-from .models import Student
-from .serializers import StudentSerializer
+from .models import Customer
+from .serializers import CustomerSerializer
 
 from rest_framework import status # for http status
 from rest_framework.response import Response 
 from rest_framework.views import APIView #to define the apis
 
 
-class StudentListApiView(APIView):
+class CustomerListApiView(APIView):
 
-    def get(self, request):
-        '''
-        List all the student items for given requested user
-        '''
-        # print(request.user)
-        students = Student.objects.all()
-        serializer = StudentSerializer(students, many=True)
+    def get(self, requesst):
+        customers = Customer.objects.all()
+        serializer = CustomerSerializer(customers, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
-    # This is for conditional authentication
     def post(self, request):
         '''
         Create the student with given student data
         '''
         data=request.data
-        name = data.get("name")
-        age = data.get("age")
-        email = data.get("email")
-        address = data.get("address")
+        print(data)
+        customer_id = data.get("customer_id")
+        first_name = data.get("first_name")
+        last_name = data.get("last_name")
+        customer_phone = data.get("customer_phone")
+        customer_email = data.get("customer_email")
 
         data = {
-            'name': name,
-            'age': age,
-            'email':email,
-            'address':address
+            "customer_id" : customer_id,
+            "first_name" : first_name,
+            "last_name" : last_name,
+            "customer_phone" : customer_phone,
+            "customer_email" : customer_email
         }
 
-        serializer = StudentSerializer(data=data)
+        serializer = CustomerSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -43,15 +41,15 @@ class StudentListApiView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class StudentDetailApiView(APIView):
+class CustomerDetailApiView(APIView):
 
     def get_object(self, student_id):
         '''
         Helper method to get the object with given student_id
         '''
         try:
-            return Student.objects.get(id=student_id)
-        except Student.DoesNotExist:
+            return Customer.objects.get(id=student_id)
+        except Customer.DoesNotExist:
             return None
 
     # 3. Retrieve
@@ -66,7 +64,7 @@ class StudentDetailApiView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        serializer = StudentSerializer(student_instance)
+        serializer = CustomerSerializer(student_instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     # 4. Update
@@ -94,7 +92,7 @@ class StudentDetailApiView(APIView):
             'address':address
         }
 
-        serializer = StudentSerializer(instance = student_instance, data=data, partial = True)
+        serializer = CustomerSerializer(instance = student_instance, data=data, partial = True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)

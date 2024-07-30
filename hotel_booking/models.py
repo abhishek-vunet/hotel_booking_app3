@@ -1,11 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 # Create your models here.
 
-class Student(models.Model):
+class Customer(models.Model):
 
-    name = models.CharField(max_length=100)
-    age = models.IntegerField(default=18)
-    email = models.EmailField()
-    address = models.TextField()
+    customer_id = models.IntegerField(default=0)
+    first_name = models.CharField(max_length=30,default="f")
+    last_name = models.CharField(max_length=30,default="f")
+    customer_phone = models.BigIntegerField(default=0)
+    customer_email = models.EmailField(default="null")
