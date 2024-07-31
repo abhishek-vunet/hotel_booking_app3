@@ -6,20 +6,18 @@ from .validators import validate_phone_number, validate_email
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = ['customer_id', 'first_name', 'last_name', 'customer_phone', 'customer_email']
+        fields = ['id', 'first_name', 'last_name', 'customer_phone', 'customer_email']
 
     def validate_customer_phone(self, value):
-        """Validate phone number."""
+        print(value)
         validate_phone_number(value)
         return value
 
     def validate_customer_email(self, value):
-        """Ensure the email address is valid."""
         validate_email(value)
         return value
 
     def validate(self, data):
-        """Object-level validation."""
         errors = {}
         if not data.get('first_name'):
             errors['first_name'] = "First name is required."

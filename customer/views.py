@@ -8,21 +8,21 @@ from rest_framework.views import APIView #to define the apis
 
 class CustomerGetApiView(APIView):
 
-    def get(self, requesst):
+    def get(self, request):
         customers = Customer.objects.all()
         serializer = CustomerSerializer(customers, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class CustomerGetByIdApiView(APIView):
 
-    def get_object(self, customer_id):
+    def get_object(self, id):
         try:
-            return Customer.objects.get(customer_id=customer_id)
+            return Customer.objects.get(id=id)
         except Customer.DoesNotExist:
             return None
         
-    def get(self,request,customer_id):
-        customer_instance = self.get_object(customer_id)
+    def get(self,request,id):
+        customer_instance = self.get_object(id)
         if not customer_instance:
             return Response(
                 {"res": "Object with customer id does not exists"},
@@ -60,17 +60,17 @@ class CustomerAddApiView(APIView):
 
 class CustomerUpdateByIdApiView(APIView):
 
-    def get_object(self, customer_id):
+    def get_object(self, id):
 
         try:
-            return Customer.objects.get(customer_id=customer_id)
+            return Customer.objects.get(id=id)
         except Customer.DoesNotExist:
             return None
 
 
-    def put(self, request, customer_id):
+    def put(self, request, id):
  
-        customer_instance = self.get_object(customer_id)
+        customer_instance = self.get_object(id)
         if not customer_instance:
             return Response(
                 {"res": "Object with customer id does not exists"}, 
@@ -84,7 +84,7 @@ class CustomerUpdateByIdApiView(APIView):
         customer_email = data.get("customer_email")
 
         data = {
-            "customer_id" : customer_id,
+            "id" : id,
             "first_name" : first_name,
             "last_name" : last_name,
             "customer_phone" : customer_phone,
@@ -99,15 +99,15 @@ class CustomerUpdateByIdApiView(APIView):
 
 class CustomerDeleteByIdApiView(APIView):
 
-    def get_object(self, customer_id):
+    def get_object(self, id):
 
         try:
-            return Customer.objects.get(customer_id=customer_id)
+            return Customer.objects.get(id=id)
         except Customer.DoesNotExist:
             return None
 
-    def delete(self, request, customer_id):
-        customer_instance = self.get_object(customer_id)
+    def delete(self, request, id):
+        customer_instance = self.get_object(id)
         if not customer_instance:
             return Response(
                 {"res": "Object with customer id does not exists"}, 
