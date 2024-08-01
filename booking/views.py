@@ -378,7 +378,6 @@ class Check_outGetByIdApiView(APIView):
         serializer = Check_outSerializer(Check_out_instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-
 def generate_pdf(lines):
     buf = io.BytesIO()
     c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
@@ -416,7 +415,7 @@ class Check_outAddApiView(APIView):
 
             customer_mail = Booking.objects.get(id=booking).customer.customer_email
 
-            lines = ["Hotel Booking App","Your Booking has been confirmed","Thanks","Abhishek Kumar"]
+            lines = ["Invoice","Thanks for the stay.","Regards","Abhishek Kumar"]
 
             pdf_buffer = generate_pdf(lines)
 
@@ -494,29 +493,3 @@ class Check_outDeleteByIdApiView(APIView):
             {"res": "Object deleted!"},
             status=status.HTTP_200_OK
         )
-
-# class BookingAddApiView(APIView):
-    
-#     def post(self, request):
-
-#         data=request.data
-#         booking_name = data.get("booking_name")
-#         booking_phone = data.get("booking_phone")
-#         booking_email = data.get("booking_email")
-#         booking_description = data.get("booking_description")
-
-#         data = {
-#             "booking_name" : booking_name,
-#             "booking_phone" : booking_phone,
-#             "booking_email" : booking_email,
-#             "booking_description" : booking_description 
-#         }
-
-#         serializer = BookingSerializer(data=data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         else:
-#             errors = serializer.errors
-#             return Response({'error': errors}, status=status.HTTP_400_BAD_REQUEST)
-

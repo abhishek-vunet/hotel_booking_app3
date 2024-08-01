@@ -1,10 +1,8 @@
 from .models import Hotel,Review,Room,Amenities
-from customer.models import Customer
 from .serializers import HotelSerializer,ReviewSerializer,RoomSerializer,AmenitiesSerializer
-
-from rest_framework import status # for http status
+from rest_framework import status
 from rest_framework.response import Response 
-from rest_framework.views import APIView #to define the apis
+from rest_framework.views import APIView
 
 class SearchHotelByNameApiView(APIView):
         
@@ -25,7 +23,6 @@ class SearchHotelByNameApiView(APIView):
                 {"res": "Object with hotel name does not exists"},
                 status=status.HTTP_400_BAD_REQUEST
             )
-
 
 class HotelGetApiView(APIView):
 
@@ -62,12 +59,13 @@ class HotelAddApiView(APIView):
         hotel_phone = data.get("hotel_phone")
         hotel_email = data.get("hotel_email")
         hotel_description = data.get("hotel_description")
-
+        
         data = {
             "hotel_name" : hotel_name,
             "hotel_phone" : hotel_phone,
             "hotel_email" : hotel_email,
-            "hotel_description" : hotel_description 
+            "hotel_description" : hotel_description,
+   
         }
 
         serializer = HotelSerializer(data=data)
@@ -280,11 +278,14 @@ class RoomAddApiView(APIView):
         room_number = data.get("room_number")
         hotel = data.get("hotel")
         description = data.get("room_description")
+        price = data.get("price")
+
 
         data = {
             "room_number" : room_number,
             "hotel" : hotel,
-            "room_description": description
+            "room_description": description,
+            "price":price
         }
 
         serializer = RoomSerializer(data=data)

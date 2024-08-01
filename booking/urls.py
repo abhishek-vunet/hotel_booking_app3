@@ -49,6 +49,4 @@ urlpatterns = [
     path('getCheck_outById/<int:id>', Check_outGetByIdApiView.as_view()),
     path('updateCheck_outById/<int:id>', Check_outUpdateByIdApiView.as_view()),
     path('deleteCheck_outById/<int:id>', Check_outDeleteByIdApiView.as_view()),
-
-
 ]
