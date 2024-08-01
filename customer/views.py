@@ -57,7 +57,6 @@ class CustomerAddApiView(APIView):
             errors = serializer.errors
             return Response({'error': errors}, status=status.HTTP_400_BAD_REQUEST)
 
-
 class CustomerUpdateByIdApiView(APIView):
 
     def get_object(self, id):

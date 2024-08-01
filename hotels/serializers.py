@@ -6,7 +6,7 @@ from .validators import validate_phone_number, validate_email
 class HotelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hotel
-        fields = ['id', 'hotel_name', 'hotel_phone', 'hotel_email', 'hotel_description']
+        fields = "__all__"
 
     def validate_hotel_phone(self, value):
         validate_phone_number(value)
@@ -27,8 +27,30 @@ class HotelSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ['id','hotel','customer','reviews','created_at']
+        fields = "__all__"
 
-    # def validate_hotel(self, value):
-    #     if_present_hotel_id(value)
-    #     return value
+class RoomSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Room
+        fields = "__all__"
+
+    def validate(self,data):
+        #all the rooms which this room_numberfiltered_hotels
+        current_room = data.get('room_number')
+        filtered_rooms = Room.objects.filter(room_number=current_room)
+        current_hotel = data.get('hotel')
+
+        hotels = []
+        for room in filtered_rooms:
+            temp_hotel = room.hotel.id
+            hotels.append(temp_hotel)
+            if current_hotel.id in hotels:
+                raise serializers.ValidationError({"room_number":"This room number is already present in this hotel"})
+
+        return data
+
+class AmenitiesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Amenities
+        fields = "__all__"
+    

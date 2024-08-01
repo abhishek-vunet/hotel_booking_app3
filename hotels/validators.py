@@ -11,8 +11,3 @@ def validate_email(value):
     """Ensure the email address is valid."""
     if '@' not in value:
         raise ValidationError("Enter a valid email address.")
-
-# def if_present_hotel_id(value):
-#     print(value)
-#     if value != 2:
-#         raise ValidationError("This hotel is not valid.")

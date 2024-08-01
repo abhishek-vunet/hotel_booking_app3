@@ -21,10 +21,11 @@ class Room(models.Model):
     room_number = models.CharField(max_length=10, blank=False, null=False)
     hotel = models.ForeignKey(Hotel, null=True, on_delete=models.SET_NULL,related_name='rooms') #hotel_id
     room_description = models.TextField(max_length=200,blank=True, null=False)
+    price = models.IntegerField(null=True,blank=True)
 
 class Amenities(models.Model):
     id = models.AutoField(primary_key=True)
-    room = models.ForeignKey(Room,null=True, on_delete=models.SET_NULL,related_name='amenities') #room_id
+    room = models.ForeignKey(Room,null=True, on_delete=models.SET_NULL,related_name='amenities',unique=True) #room_id
     ac =  models.BooleanField(blank=False,null=False)
     number_of_beds = models.IntegerField(blank=False,null=False)
     balcony = models.BooleanField(blank=False, null=False)
