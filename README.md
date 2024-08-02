@@ -1,11 +1,26 @@
 # Docker Operations Guide
 
+This document provides detailed instructions and scripts for various Docker operations.
+
 ## 1. What is the relation between an image and a container in Docker?
 
 In Docker:
 - **Image:** A Docker image is a lightweight, standalone, and executable software package that includes everything needed to run a piece of software: the code, runtime, libraries, and dependencies. Images serve as the blueprint for creating containers.
 - **Container:** A Docker container is a running instance of a Docker image. It represents a running process in the Docker environment and provides an isolated execution environment. Containers use the image as a template but have their own writable filesystem and isolated resources.
-  
+
+### Differences Between an Image and a Container
+
+| Feature          | Image                                     | Container                                |
+|------------------|-------------------------------------------|------------------------------------------|
+| **Definition**   | Blueprint for creating containers         | Running instance of an image              |
+| **State**        | Static (unchangeable)                     | Dynamic (can change during execution)    |
+| **Filesystem**   | Read-only filesystem                      | Writable filesystem                       |
+| **Resource**     | No isolated resources                     | Has isolated resources                    |
+| **Execution**    | Not executable on its own                 | Runs applications and processes           |
+| **Persistence**  | Does not maintain state                   | Maintains state during runtime            |
+| **Lifecycle**    | Created once, can be reused               | Started, stopped, and deleted             |
+
+
 ## 2. List all the images and the containers in the system.
 
 - **List Docker images:**
