@@ -1,14 +1,15 @@
 ```markdown
 # Docker Operations Guide
-
-This document provides detailed instructions and scripts for various Docker operations.
-
+  ```b
+  ```
 ## 1. What is the relation between an image and a container in Docker?
 
 In Docker:
 - **Image:** A Docker image is a lightweight, standalone, and executable software package that includes everything needed to run a piece of software: the code, runtime, libraries, and dependencies. Images serve as the blueprint for creating containers.
 - **Container:** A Docker container is a running instance of a Docker image. It represents a running process in the Docker environment and provides an isolated execution environment. Containers use the image as a template but have their own writable filesystem and isolated resources.
-
+  
+  ```b
+  ```
 ## 2. List all the images and the containers in the system.
 
 - **List Docker images:**
@@ -17,7 +18,7 @@ In Docker:
   docker images
   ```
 
-- **List Docker containers:**
+- **Run the `nginx` container:**
 
   ```bash
   docker ps -a
