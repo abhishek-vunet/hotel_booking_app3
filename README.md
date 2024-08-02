@@ -1,4 +1,4 @@
-# Docker Operations Guide
+# Docker Questions
 
 This document provides detailed instructions and scripts for various Docker operations.
 
@@ -29,7 +29,7 @@ In Docker:
   docker images
   ```
 
-- **Run the `nginx` container:**
+- **List Docker Containers:**
 
   ```bash
   docker ps -a
@@ -48,10 +48,10 @@ In Docker:
   ```bash
   docker run -d --name super-nginx -p 7001:80 -e NGINX_HOST=vunet.local nginx
   ```
-
-  - `-d` runs the container in detached mode.
+  
   - `--name super-nginx` names the container `super-nginx`.
   - `-p 7001:80` exposes port 80 of the container to port 7001 on the host.
+  - `-d` runs the container in detached mode.
   - `-e NGINX_HOST=vunet.local` sets the environment variable `NGINX_HOST`.
 
 ## 4. Get the list of all running containers and stop and remove the `nginx` container
@@ -76,13 +76,13 @@ In Docker:
 
 ## 5. Create a Docker volume named `vunet` and run `nginx` again, attaching the volume to `/etc/` in the container
 
-- **Create the Docker volume:**
+- **Create a Docker volume:**
 
   ```bash
   docker volume create vunet
   ```
 
-- **Run the `nginx` container with the volume attached:**
+- **Run the `nginx` container with the volume attached to /etc/:**
 
   ```bash
   docker run -d --name super-nginx -p 7001:80 -v vunet:/etc/ nginx
@@ -123,16 +123,16 @@ In Docker:
       apt-get install -y python3.10 python3-pip
 
   # Copy the Python script into the image
-  COPY server.py /usr/src/app/server.py
+  COPY server.py /usr/src/app/app.py
 
   # Set the working directory
   WORKDIR /usr/src/app
 
   # Run the Python script as the entrypoint
-  ENTRYPOINT ["python3", "server.py"]
+  ENTRYPOINT ["python3", "app.py"]
   ```
 
-- **Python script (`server.py`):**
+- **Python script (`app.py`):**
 
   ```python
   import http.server
@@ -155,13 +155,13 @@ In Docker:
 - **Build the Docker image:**
 
   ```bash
-  docker build -t python-server .
+  docker build -t abhishek_container .
   ```
 
 - **Run the container using the image:**
 
   ```bash
-  docker run -d --name python-server -p 8000:8000 python-server
+  docker run -d --name abhishek_container -p 8000:8000 python-server
   ```
 
 ## 9. Check if the container is running and has the Python process running
@@ -172,12 +172,12 @@ In Docker:
   docker ps
   ```
 
-  Ensure `python-server` is listed.
+  Yes the python process is running as `app.py` is listed.
 
 - **Check the Python process inside the container:**
 
   ```bash
-  docker exec -it python-server ps aux
+  docker exec -it abhishek_container ps aux
   ```
 
 ## 10. Why are Docker networks used? Create a Docker network named `vunet`
