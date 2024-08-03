@@ -109,7 +109,7 @@ In Docker:
   RUN apt-get update && \
       apt-get install -y python3.10 python3-pip
 
-  COPY server.py /usr/src/app/app.py
+  COPY app.py /usr/src/app/app.py
 
   WORKDIR /usr/src/app
 
