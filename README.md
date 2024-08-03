@@ -1,7 +1,5 @@
 # Docker Questions
 
-This document provides detailed instructions and scripts for various Docker operations.
-
 ## 1. What is the relation between an image and a container in Docker?
 
 In Docker:
