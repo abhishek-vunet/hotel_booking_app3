@@ -139,13 +139,13 @@ In Docker:
 - **Build the Docker image:**
 
   ```bash
-  docker build -t abhishek_container .
+  docker build -t abhishek_image .
   ```
 
 - **Run the container using the image:**
 
   ```bash
-  docker run -d --name abhishek_container -p 8000:8000 python-server
+  docker run -d --name abhishek_container -p 8000:8000 abhishek_image
   ```
 
 ## 9. Check if the container is running and has the Python process running
