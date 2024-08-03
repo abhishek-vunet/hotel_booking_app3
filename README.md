@@ -5,16 +5,14 @@ This document provides detailed instructions and scripts for various Docker oper
 ## 1. What is the relation between an image and a container in Docker?
 
 In Docker:
-- **Image:** A Docker image is a lightweight, standalone, and executable software package that includes everything needed to run a piece of software: the code, runtime, libraries, and dependencies. Images serve as the blueprint for creating containers.
-- **Container:** A Docker container is a running instance of a Docker image. It represents a running process in the Docker environment and provides an isolated execution environment. Containers use the image as a template but have their own writable filesystem and isolated resources.
+- **Image:** A Docker image is a blueprint for creating customers. It includes the application code, runtime environment, libraries and other dependencies required to run an application.
+- **Container:** A Docker container is a running instance of a Docker image. It is an isolated environment where the application defined in the image runs. Containers share the host system Kernal but have their own file system, network and process space.
 
 ### Differences Between an Image and a Container
 
 | Feature          | Image                                     | Container                                |
 |------------------|-------------------------------------------|------------------------------------------|
 | **Definition**   | Blueprint for creating containers         | Running instance of an image              |
-| **State**        | Static (unchangeable)                     | Dynamic (can change during execution)    |
-| **Filesystem**   | Read-only filesystem                      | Writable filesystem                       |
 | **Resource**     | No isolated resources                     | Has isolated resources                    |
 | **Execution**    | Not executable on its own                 | Runs applications and processes           |
 | **Persistence**  | Does not maintain state                   | Maintains state during runtime            |
@@ -48,11 +46,6 @@ In Docker:
   ```bash
   docker run -d --name super-nginx -p 7001:80 -e NGINX_HOST=vunet.local nginx
   ```
-  
-  - `--name super-nginx` names the container `super-nginx`.
-  - `-p 7001:80` exposes port 80 of the container to port 7001 on the host.
-  - `-d` runs the container in detached mode.
-  - `-e NGINX_HOST=vunet.local` sets the environment variable `NGINX_HOST`.
 
 ## 4. Get the list of all running containers and stop and remove the `nginx` container
 
@@ -88,8 +81,6 @@ In Docker:
   docker run -d --name super-nginx -p 7001:80 -v vunet:/etc/ nginx
   ```
 
-  - `-v vunet:/etc/` attaches the `vunet` volume to `/etc/` in the container.
-
 ## 6. Stop and remove the `nginx` container and remove the volume `vunet`
 
 - **Stop the `nginx` container:**
@@ -115,20 +106,15 @@ In Docker:
 - **Create a `Dockerfile`:**
 
   ```Dockerfile
-  # Use the latest Ubuntu image
   FROM ubuntu:latest
 
-  # Install Python 3.10
   RUN apt-get update && \
       apt-get install -y python3.10 python3-pip
 
-  # Copy the Python script into the image
   COPY server.py /usr/src/app/app.py
 
-  # Set the working directory
   WORKDIR /usr/src/app
 
-  # Run the Python script as the entrypoint
   ENTRYPOINT ["python3", "app.py"]
   ```
 
@@ -150,7 +136,7 @@ In Docker:
   httpd.serve_forever()
   ```
 
-## 8. Build and run the container
+## 8. Run a container using the image created
 
 - **Build the Docker image:**
 
@@ -184,7 +170,7 @@ In Docker:
 
 - **Purpose of Docker networks:**
 
-  Docker networks are used to manage communication between containers, isolate network traffic, and configure network settings. They enable containers to communicate with each other and with external systems securely and efficiently.
+  Docker networks are used to manage communication between containers, isolate network traffic, and configure network settings. They enable containers to communicate with each other and with external systems securely and efficiently. Conceptually, a network is a virtual switch. It can be a local (to a single Engine) or global (across multiple hosts).
 
 - **Create a Docker network named `vunet`:**
 
@@ -197,8 +183,5 @@ In Docker:
 - **Run Nginx containers in the `vunet` network:**
 
   ```bash
-  docker run -d --name nginx1 --network vunet nginx
-  docker run -d --name nginx2 --network vunet nginx
+  docker run -d --name abhishek_nginx --network vunet nginx
   ```
-
-  These commands run two Nginx containers connected to the `vunet` network.
