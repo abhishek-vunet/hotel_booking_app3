@@ -160,6 +160,14 @@ In the same folder create both the files: Dockerfile & app.py
 
   Yes the python process is running as `app.py` is listed.
 
+- **Checking the localhost:**
+
+  ```bash
+  curl localhost:8000
+  ```
+
+  It will print "Hello World"
+
 - **Check the Python process inside the container:**
 
   ```bash
