@@ -101,6 +101,8 @@ In Docker:
 
 ## 7. Create a Dockerfile
 
+In the same folder create both the files: Dockerfile & app.py
+
 - **Create a `Dockerfile`:**
 
   ```Dockerfile
