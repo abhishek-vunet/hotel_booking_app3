@@ -12,6 +12,10 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import letter
 from django.core.mail import EmailMessage
+
+from django.shortcuts import render
+from .forms import PendingBookingForm,BookingForm,CheckInForm,CheckOutForm
+from rest_framework.parsers import FormParser, MultiPartParser
     
 class BookingGetApiView(APIView):
 
@@ -130,6 +134,10 @@ class PendingBookingGetByIdApiView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class PendingBookingAddApiView(APIView):
+    parser_classes = [FormParser, MultiPartParser]  # Add parsers to handle form data
+
+    def get(self,request):
+        return render(request, "addPendingBooking.html", {"form": PendingBookingForm})
     
     def post(self, request):
         data = request.data
@@ -168,6 +176,7 @@ class PendingBookingAddApiView(APIView):
                     booking_serializer.save()
 
                     customer_mail = Customer.objects.get(id=customer_id).customer_email
+                    print(customer_mail)
                     # send a mail here to the customer
                     send_mail(
                         "Hotel Booking App",
@@ -275,6 +284,10 @@ class Check_inGetByIdApiView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class Check_inAddApiView(APIView):
+    parser_classes = [FormParser, MultiPartParser]  # Add parsers to handle form data
+
+    def get(self,request):
+        return render(request, "addCheckIn.html", {"form": CheckInForm})
     
     def post(self, request):
        
@@ -396,6 +409,11 @@ def generate_pdf(lines):
     return buf
 
 class Check_outAddApiView(APIView):
+
+    parser_classes = [FormParser, MultiPartParser]  # Add parsers to handle form data
+
+    def get(self,request):
+        return render(request, "addCheckout.html", {"form": CheckOutForm})
     
     def post(self, request):
        

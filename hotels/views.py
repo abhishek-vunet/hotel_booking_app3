@@ -4,6 +4,10 @@ from rest_framework import status
 from rest_framework.response import Response 
 from rest_framework.views import APIView
 
+from django.shortcuts import render
+from .forms import HotelForm,RoomForm,AmenityForm,ReviewForm
+from rest_framework.parsers import FormParser, MultiPartParser
+
 class SearchHotelByNameApiView(APIView):
         
     def get(self,request,name):
@@ -52,8 +56,21 @@ class HotelGetByIdApiView(APIView):
 
 class HotelAddApiView(APIView):
     
-    def post(self, request):
+    parser_classes = [FormParser, MultiPartParser]  # Add parsers to handle form data
 
+# The parser classes in Django REST Framework (DRF) handle the content type of incoming HTTP requests. By default, DRF's APIView expects the request body to be in JSON format. However, when you're submitting a form via an HTML page, the data is typically sent in either application/x-www-form-urlencoded or multipart/form-data format, not JSON. This is where parsers come into play.
+
+# How Parsers Help
+# FormParser: This parser is used to handle application/x-www-form-urlencoded content type, which is the format in which data is sent when you submit a typical HTML form (without file uploads).
+
+# MultiPartParser: This parser is used to handle multipart/form-data content type, which is used when your form includes file uploads along with other fields.
+
+# By specifying these parsers in your APIView, you're telling DRF to expect and correctly handle form data instead of just JSON. This allows your API view to process form submissions correctly.
+    def get(self,request):
+        return render(request, "addHotel.html", {"form": HotelForm})
+    
+    def post(self, request):
+        
         data=request.data
         hotel_name = data.get("hotel_name")
         hotel_phone = data.get("hotel_phone")
@@ -165,11 +182,17 @@ class ReviewGetByIdApiView(APIView):
 
 class ReviewAddApiView(APIView):
     
+    parser_classes = [FormParser, MultiPartParser]  # Add parsers to handle form data
+
+    def get(self,request):
+        return render(request, "addReview.html", {"form": ReviewForm})
+
     def post(self, request):
 
         data=request.data
-        hotel_id = data.get("hotel_id")
-        customer_id = data.get("customer_id")
+        print(data)
+        hotel_id = data.get("hotel")
+        customer_id = data.get("customer")
         reviews = data.get("reviews")
 
         data = {
@@ -271,6 +294,11 @@ class RoomGetByIdApiView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class RoomAddApiView(APIView):
+    
+    parser_classes = [FormParser, MultiPartParser]  # Add parsers to handle form data
+
+    def get(self,request):
+        return render(request, "addRoom.html", {"form": RoomForm})
     
     def post(self, request):
 
@@ -381,6 +409,12 @@ class AmenitiesGetByIdApiView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class AmenitiesAddApiView(APIView):
+        
+    parser_classes = [FormParser, MultiPartParser]  # Add parsers to handle form data
+
+    def get(self,request):
+
+        return render(request, "addAmenities.html", {"form": AmenityForm})
     
     def post(self, request):
 

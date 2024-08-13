@@ -23,6 +23,8 @@ from .views import (HotelGetApiView,
                     AmenitiesGetByIdApiView,
                     AmenitiesUpdateByIdApiView,
                     AmenitiesDeleteByIdApiView,
+
+                    
                 )
 
 urlpatterns = [

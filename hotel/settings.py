@@ -69,7 +69,7 @@ ROOT_URLCONF = 'hotel.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -148,4 +148,5 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "abhishekkumar@vunetsystems.com"
-EMAIL_HOST_PASSWORD = "abcd"
+EMAIL_HOST_PASSWORD = "fkgt wtdr aydy qaki"
+
