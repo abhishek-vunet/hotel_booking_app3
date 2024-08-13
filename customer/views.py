@@ -5,6 +5,9 @@ from rest_framework import status # for http status
 from rest_framework.response import Response 
 from rest_framework.views import APIView #to define the apis
 
+from django.shortcuts import render
+from .forms import CustomerForm
+from rest_framework.parsers import FormParser, MultiPartParser
 
 class CustomerGetApiView(APIView):
 
@@ -33,6 +36,10 @@ class CustomerGetByIdApiView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class CustomerAddApiView(APIView):
+    parser_classes = [FormParser, MultiPartParser]  # Add parsers to handle form data
+
+    def get(self,request):
+        return render(request, "addCustomer.html", {"form": CustomerForm})
     
     def post(self, request):
 
